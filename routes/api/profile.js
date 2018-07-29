@@ -16,7 +16,7 @@ router.get('/test', (req, res) => res.json({ msg: 'Profile Works' }));
 
 // @route GET api /profile
 // @desc Get Current User profile
-// @access Privvate
+// @access Private
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
@@ -31,6 +31,77 @@ router.get(
         res.json(profile);
       })
       .catch(err => res.status(404).json(err));
+  }
+);
+
+// @route POST api /profile
+// @desc Create or Edit user profile
+// @access Privvate
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    // Get fields
+    const profileFields = {};
+    profileFields.user = req.user.id;
+
+    const fields = [
+      'handle',
+      'company',
+      'location',
+      'bio',
+      'status',
+      'githubusername'
+    ];
+
+    fields.forEach(field => {
+      if (req.body[field]) profileFields[field] = req.body[field];
+    });
+
+    if (typeof req.body.skills !== 'undefined') {
+      profileFields.skills = req.body.skills.split(',');
+    }
+
+    const socialFields = [
+      'youtube',
+      'instagram',
+      'twitter',
+      'facebook',
+      'linkedin'
+    ];
+
+    // Social
+    socialFields.forEach(field => {
+      if (req.body[field]) profileFields[field] = req.body[field];
+    });
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      if (profile) {
+        //Update
+        Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profileFields },
+          { new: true }
+        ).then(profile =>
+          res.json(profile).catch(err => res.status(404).json(err))
+        );
+      } else {
+        //Create
+        Profile.findOne({ handle: profileFields.handle }).then(profile => {
+          if (profile) {
+            errors.handle = 'That handle already exists';
+            res.status(400).json(errors);
+          }
+
+          //Save new Profile
+          new Profile(profileFields)
+            .save()
+            .then(profile =>
+              res.json(profile).catch(err => res.status(404).json(err))
+            );
+        });
+      }
+    });
   }
 );
 
