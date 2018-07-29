@@ -9,6 +9,9 @@ const Profile = require('../../models/Profile');
 // Load User Model
 const User = require('../../models/User');
 
+//Load Input Validation
+const validateProfileInput = require('../../validation/profile');
+
 // @route GET api /profile/test
 // @desc Tests profile route
 // @access Public
@@ -41,8 +44,16 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    const { errors, isValid } = validateProfileInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+
     // Get fields
-    const profileFields = {};
+    const profileFields = { social: {} };
     profileFields.user = req.user.id;
 
     const fields = [
@@ -51,7 +62,8 @@ router.post(
       'location',
       'bio',
       'status',
-      'githubusername'
+      'githubusername',
+      'website'
     ];
 
     fields.forEach(field => {
@@ -72,7 +84,7 @@ router.post(
 
     // Social
     socialFields.forEach(field => {
-      if (req.body[field]) profileFields[field] = req.body[field];
+      if (req.body[field]) profileFields['social'][field] = req.body[field];
     });
 
     Profile.findOne({ user: req.user.id }).then(profile => {
@@ -82,9 +94,9 @@ router.post(
           { user: req.user.id },
           { $set: profileFields },
           { new: true }
-        ).then(profile =>
-          res.json(profile).catch(err => res.status(404).json(err))
-        );
+        )
+          .then(profile => res.json(profile))
+          .catch(err => res.status(404).json(err));
       } else {
         //Create
         Profile.findOne({ handle: profileFields.handle }).then(profile => {
