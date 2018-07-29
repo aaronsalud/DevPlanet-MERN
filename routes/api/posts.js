@@ -177,4 +177,41 @@ router.post(
   }
 );
 
+// @route POST api/posts/comment/:post_id
+// @desc Add comment to a post
+// @access Private
+router.post(
+  '/comment/:post_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    //Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors object
+      return res.status(400).json(errors);
+    }
+    // Only allow logged in user to like their own posts
+    Post.findById(req.params.post_id)
+      .then(post => {
+        const fields = ['text', 'name', 'avatar'];
+        const newComment = {};
+        newComment.user = req.user.id;
+
+        fields.forEach(field => {
+          if (req.body[field]) newComment[field] = req.body[field];
+        });
+
+        // Add to comments array
+        post.comments.unshift(newComment);
+        //Save post
+        post
+          .save()
+          .then(post => res.json(post))
+          .catch(err => res.status(404).json(err));
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+
 module.exports = router;
