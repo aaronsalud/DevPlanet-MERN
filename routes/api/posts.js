@@ -23,6 +23,19 @@ router.get('/', (req, res) => {
     );
 });
 
+// @route POST api/posts/:id
+// @desc Get a post by id
+// @access Public
+router.get('/:id', (req, res) => {
+  Post.findById(req.params.id)
+    .then(post => res.json(post))
+    .catch(err =>
+      res
+        .status(404)
+        .json({ nopostfound: 'No post found with this ID', more_details: err })
+    );
+});
+
 // @route POST api/posts
 // @desc Create post
 // @access Private
