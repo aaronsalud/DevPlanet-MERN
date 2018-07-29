@@ -6,6 +6,9 @@ const passport = require('passport');
 // Post Model
 const Post = require('../../models/Post');
 
+// Profile Model
+const Profile = require('../../models/Profile');
+
 // Load Input Validation
 const validatePostInput = require('../../validation/post');
 
@@ -66,6 +69,40 @@ router.post(
     newPost
       .save()
       .then(post => res.json(post))
+      .catch(err => res.status(404).json(err));
+  }
+);
+
+// @route DELETE api/posts/:id
+// @desc Delete a post
+// @access Private
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    // Only allow logged in user to delete their own posts
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        Post.findById(req.params.id)
+          .then(post => {
+            // Check for post owner
+            if (post.user.toString() !== req.user.id) {
+              return res
+                .status(401)
+                .json({ notauthorized: 'User not authorized' });
+            }
+            // Delete the post
+            post
+              .remove()
+              .then(() => res.json({ success: true }))
+              .catch(err =>
+                res.status(404).json({ postnotfound: 'No post found' })
+              );
+          })
+          .catch(err =>
+            res.status(404).json({ postnotfound: 'No post found' })
+          );
+      })
       .catch(err => res.status(404).json(err));
   }
 );
