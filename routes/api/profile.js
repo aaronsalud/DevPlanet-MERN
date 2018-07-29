@@ -109,9 +109,8 @@ router.post(
           //Save new Profile
           new Profile(profileFields)
             .save()
-            .then(profile =>
-              res.json(profile).catch(err => res.status(404).json(err))
-            );
+            .then(profile => res.json(profile))
+            .catch(err => res.status(404).json(err));
         });
       }
     });
