@@ -140,4 +140,41 @@ router.post(
   }
 );
 
+// @route POST api/unlike/:id
+// @desc Unlike to a post
+// @access Private
+router.post(
+  '/unlike/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    // Only allow logged in user to like their own posts
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        Post.findById(req.params.id)
+          .then(post => {
+            if (
+              post.likes.filter(like => like.user.toString() === req.user.id)
+                .length == 0
+            ) {
+              return res
+                .status(400)
+                .json({ havenotliked: 'You have not yet liked this post' });
+            }
+            // Get Remove index
+            const removeIndex = post.likes
+              .map(item => item.user.toString())
+              .indexOf(req.user.id);
+
+            //Splice out of array
+            post.likes.splice(removeIndex, 1);
+            post.save().then(post => res.json(post));
+          })
+          .catch(err =>
+            res.status(404).json({ postnotfound: 'No post found' })
+          );
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+
 module.exports = router;
