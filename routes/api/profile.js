@@ -69,6 +69,26 @@ router.get('/user/:user_id', (req, res) => {
     );
 });
 
+// @route GET api/profile/all
+// @desc  Get all profiles
+// @access Public
+router.get('/all', (req, res) => {
+  Profile.find()
+    .populate('user', ['name', 'avatar'])
+    .then(profiles => {
+      if (!profiles) {
+        errors.noprofile = 'There are no profiles';
+        res.status(404).json(errors);
+      }
+      res.json(profiles);
+    })
+    .catch(err =>
+      res
+        .status(404)
+        .json({ error: 'There are no profiles', more_details: err })
+    );
+});
+
 // @route POST api/profile
 // @desc Create or Edit user profile
 // @access Private
