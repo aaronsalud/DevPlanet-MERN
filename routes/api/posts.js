@@ -191,7 +191,7 @@ router.post(
       // If any errors, send 400 with errors object
       return res.status(400).json(errors);
     }
-    // Only allow logged in user to like their own posts
+
     Post.findById(req.params.post_id)
       .then(post => {
         const fields = ['text', 'name', 'avatar'];
@@ -204,6 +204,47 @@ router.post(
 
         // Add to comments array
         post.comments.unshift(newComment);
+        //Save post
+        post
+          .save()
+          .then(post => res.json(post))
+          .catch(err => res.status(404).json(err));
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+
+// @route DELETE api/posts/comment/:post_id/:comment_id
+// @desc Remove comment from a post
+// @access Private
+router.delete(
+  '/comment/:post_id/:comment_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    // Only allow logged in user to like their own posts
+    Post.findById(req.params.post_id)
+      .then(post => {
+        // Check to see if comment exists
+        if (
+          post.comments.filter(
+            comment => comment._id.toString() === req.params.comment_id
+          ).length === 0
+        ) {
+          return res
+            .status(404)
+            .json({ commentnotexists: 'Comment does not exist' });
+        }
+
+        // Get remove Index
+        const removeIndex = post.comments
+          .map(item => item._id.toString())
+          .indexOf(req.params.comment_id);
+
+        //Splice comment out of array
+        post.comments.splice(removeIndex, 1);
+
         //Save post
         post
           .save()
