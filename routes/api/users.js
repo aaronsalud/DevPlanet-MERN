@@ -90,11 +90,16 @@ router.post('/login', (req, res) => {
         return res.status(400).json(errors);
       }
 
-      // Sign Token with payload
+      // Sign Token with payload and set token expiry to a week
       const payload = { id: user.id, name: user.name, avatar: user.avatar };
-      jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
-        res.json({ success: true, token: 'Bearer ' + token });
-      });
+      jwt.sign(
+        payload,
+        keys.secretOrKey,
+        { expiresIn: 604800 },
+        (err, token) => {
+          res.json({ success: true, token: 'Bearer ' + token });
+        }
+      );
     });
   });
 });
