@@ -107,7 +107,7 @@ router.delete(
   }
 );
 
-// @route POST api/like/:id
+// @route POST api/posts/like/:id
 // @desc Associate a like to a post
 // @access Private
 router.post(
@@ -140,7 +140,7 @@ router.post(
   }
 );
 
-// @route POST api/unlike/:id
+// @route POST api/posts/unlike/:id
 // @desc Unlike to a post
 // @access Private
 router.post(
