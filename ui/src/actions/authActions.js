@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GET_ERRORS } from './types';
+import setAuthToken from '../utils/setAuthToken';
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
@@ -19,6 +20,7 @@ export const loginUser = userData => dispatch => {
       // Set token to local storage
       localStorage.setItem('jwtToken', token);
       // Set token to Auth header
+      setAuthToken(token);
     })
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
