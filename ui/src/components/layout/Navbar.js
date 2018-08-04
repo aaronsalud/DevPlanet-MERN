@@ -6,7 +6,7 @@ import { logoutUser } from '../../actions/authActions';
 
 class Navbar extends Component {
   onLogoutClick = e => {
-    e.preventDEfault();
+    e.preventDefault();
     this.props.logoutUser();
   };
   render() {
@@ -16,7 +16,14 @@ class Navbar extends Component {
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
           <a href="" onClick={this.onLogoutClick} className="nav-link">
-            Log Out
+            <img
+              className="rounded-circle"
+              style={{ width: '25px', marginRight: '5px' }}
+              src={user.avatar}
+              alt={user.name}
+              title="You must have a Gravatar connected to your email to display an image "
+            />{' '}
+            Logout
           </a>
         </li>
       </ul>
