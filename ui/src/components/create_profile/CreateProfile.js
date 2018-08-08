@@ -28,7 +28,7 @@ class CreateProfile extends Component {
     };
   }
 
-  onsubmit = e => {
+  onSubmit = e => {
     e.preventDefault();
     console.log('submit');
   };
@@ -142,7 +142,14 @@ class CreateProfile extends Component {
                 />
 
                 <div className="mb-3">
-                  <button type="button" className="btn btn-light">
+                  <button
+                    onClick={() => {
+                      this.setState(prevState => ({
+                        displaySocialInputs: !prevState.displaySocialInputs
+                      }));
+                    }}
+                    className="btn btn-light"
+                  >
                     Add Social Network Links
                   </button>
                   <span className="text-muted">Optional</span>
