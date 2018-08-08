@@ -86,17 +86,14 @@ class CreateProfile extends Component {
                   options={options}
                 />
 
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Company"
-                    name="company"
-                  />
-                  <small className="form-text text-muted">
-                    Could be your own company or one you work for
-                  </small>
-                </div>
+                <TextFieldGroup
+                  placeholder="Company"
+                  name="company"
+                  value={this.state.company}
+                  onChange={this.onChange}
+                  error={errors.company}
+                  info="Could be your own company or one you work for"
+                />
                 <div className="form-group">
                   <input
                     type="text"
