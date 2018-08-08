@@ -131,16 +131,15 @@ class CreateProfile extends Component {
                   info="If you want your latest repos and a Github link, include
                   your username"
                 />
-                <div className="form-group">
-                  <textarea
-                    className="form-control form-control-lg"
-                    placeholder="A short bio of yourself"
-                    name="bio"
-                  />
-                  <small className="form-text text-muted">
-                    Tell us a little about yourself
-                  </small>
-                </div>
+
+                <TextAreaFieldGroup
+                  name="bio"
+                  placeholder="A short bio of yourself"
+                  value={this.state.bio}
+                  error={errors.bio}
+                  onChange={this.onChange}
+                  info="Tell us a little about yourself"
+                />
 
                 <div className="mb-3">
                   <button type="button" className="btn btn-light">
