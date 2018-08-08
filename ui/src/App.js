@@ -7,6 +7,8 @@ import { clearCurrentProfile } from './actions/profileActions';
 import { Provider } from 'react-redux';
 import store from './store';
 
+import PrivateRoute from './components/common/PrivateRoute';
+
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
@@ -14,7 +16,7 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create_profile/CreateProfile';
-import PrivateRoute from './components/common/PrivateRoute';
+import EditProfile from './components/edit_profile/EditProfile';
 
 import './App.css';
 
@@ -57,6 +59,13 @@ class App extends Component {
                   exact
                   path="/create-profile"
                   component={CreateProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/edit-profile"
+                  component={EditProfile}
                 />
               </Switch>
             </div>
