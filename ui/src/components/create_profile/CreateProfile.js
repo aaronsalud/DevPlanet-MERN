@@ -27,7 +27,19 @@ class CreateProfile extends Component {
       errors: {}
     };
   }
+
+  onsubmit = e => {
+    e.preventDefault();
+    console.log('submit');
+  };
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
+    const { errors } = this.state;
+
     return (
       <div className="create-profile">
         <div className="container">
@@ -41,19 +53,17 @@ class CreateProfile extends Component {
                 Let's get some information to make your profile stand out
               </p>
               <small className="d-block pb-3">* = required field</small>
-              <form action="add-experience.html">
+              <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
+                  <TextFieldGroup
                     placeholder="* Profile handle"
                     name="handle"
-                    required
+                    value={this.state.handle}
+                    onChange={this.onChange}
+                    error={errors.handle}
+                    info="A unique handle for your profile URL. Your full name,
+                    company name, nickname, etc (This CAN'T be changed later)"
                   />
-                  <small className="form-text text-muted">
-                    A unique handle for your profile URL. Your full name,
-                    company name, nickname, etc (This CAN'T be changed later)
-                  </small>
                 </div>
                 <div className="form-group">
                   <select
