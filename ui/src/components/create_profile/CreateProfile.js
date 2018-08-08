@@ -40,6 +40,19 @@ class CreateProfile extends Component {
   render() {
     const { errors } = this.state;
 
+    // Select options for status
+    const options = [
+      { label: '* Select Proessional Status', value: '0' },
+      { label: 'Developer', value: 'Developer' },
+      { label: 'Junior Developer', value: 'Junior Developer' },
+      { label: 'Senior Developer', value: 'Senior Developer' },
+      { label: 'Manager', value: 'Manager' },
+      { label: 'Student or Learning', value: 'Student or Learning' },
+      { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
+      { label: 'Intern', value: 'Intern' },
+      { label: 'Other', value: 'Other' }
+    ];
+
     return (
       <div className="create-profile">
         <div className="container">
@@ -54,38 +67,25 @@ class CreateProfile extends Component {
               </p>
               <small className="d-block pb-3">* = required field</small>
               <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <TextFieldGroup
-                    placeholder="* Profile handle"
-                    name="handle"
-                    value={this.state.handle}
-                    onChange={this.onChange}
-                    error={errors.handle}
-                    info="A unique handle for your profile URL. Your full name,
+                <TextFieldGroup
+                  placeholder="* Profile handle"
+                  name="handle"
+                  value={this.state.handle}
+                  onChange={this.onChange}
+                  error={errors.handle}
+                  info="A unique handle for your profile URL. Your full name,
                     company name, nickname, etc (This CAN'T be changed later)"
-                  />
-                </div>
-                <div className="form-group">
-                  <select
-                    className="form-control form-control-lg"
-                    name="status"
-                  >
-                    <option value="0">* Select Professional Status</option>
-                    <option value="Developer">Developer</option>
-                    <option value="Junior Developer">Junior Developer</option>
-                    <option value="Senior Developer">Senior Developer</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Student or Learning">
-                      Student or Learning
-                    </option>
-                    <option value="Instructor">Instructor or Teacher</option>
-                    <option value="Intern">Intern</option>
-                    <option value="Other">Other</option>
-                  </select>
-                  <small className="form-text text-muted">
-                    Give us an idea of where you are at in your career
-                  </small>
-                </div>
+                />
+
+                <SelectListFieldGroup
+                  name="status"
+                  value={this.state.status}
+                  onChange={this.onChange}
+                  error={errors.status}
+                  info=" Give us an idea of where you are at in your career"
+                  options={options}
+                />
+
                 <div className="form-group">
                   <input
                     type="text"
