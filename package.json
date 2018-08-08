@@ -6,7 +6,7 @@
   "scripts": {
     "client-install": "nom install --prefix ui",
     "start": "node server.js",
-    "server": "nodemon server.js",
+    "server": "nodemon server.js --ignore client",
     "client": "npm start --prefix ui",
     "dev": "concurrently \"npm run server \" \"npm run client \""
   },
