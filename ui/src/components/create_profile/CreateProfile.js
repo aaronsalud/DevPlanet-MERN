@@ -254,4 +254,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { createProfile }
-)(withRouter(createProfile));
+)(withRouter(CreateProfile));
