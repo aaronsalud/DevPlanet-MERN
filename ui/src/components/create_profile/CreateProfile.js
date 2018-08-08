@@ -94,17 +94,16 @@ class CreateProfile extends Component {
                   error={errors.company}
                   info="Could be your own company or one you work for"
                 />
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Website"
-                    name="website"
-                  />
-                  <small className="form-text text-muted">
-                    Could be your own or a company website
-                  </small>
-                </div>
+
+                <TextFieldGroup
+                  placeholder="Website"
+                  name="website"
+                  value={this.state.website}
+                  onChange={this.onChange}
+                  error={errors.website}
+                  info="Could be your own or a company website"
+                />
+
                 <div className="form-group">
                   <input
                     type="text"
