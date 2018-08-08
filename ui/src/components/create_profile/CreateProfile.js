@@ -38,7 +38,58 @@ class CreateProfile extends Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors, displaySocialInputs } = this.state;
+
+    let socialInputs;
+
+    if (displaySocialInputs) {
+      socialInputs = (
+        <div>
+          <InputFieldGroup
+            placeholder="Twitter Profile URL"
+            name="twitter"
+            icon="fab fa-twitter"
+            value={this.state.twitter}
+            onChange={this.onChange}
+            error={errors.twitter}
+          />
+          <InputFieldGroup
+            placeholder="Facebook Page URL"
+            name="facebook"
+            icon="fab fa-facebook"
+            value={this.state.facebook}
+            onChange={this.onChange}
+            error={errors.facebook}
+          />
+
+          <InputFieldGroup
+            placeholder="Linkedin Profile URL"
+            name="linkedin"
+            icon="fab fa-linkedin"
+            value={this.state.linkedin}
+            onChange={this.onChange}
+            error={errors.linkedin}
+          />
+          <InputFieldGroup
+            placeholder="Youtube Channel URL"
+            name="youtube"
+            icon="fab fa-youtube"
+            value={this.state.youtube}
+            onChange={this.onChange}
+            error={errors.youtube}
+          />
+
+          <InputFieldGroup
+            placeholder="Instagram Page URL"
+            name="instagram"
+            icon="fab fa-instagram"
+            value={this.state.instagram}
+            onChange={this.onChange}
+            error={errors.instagram}
+          />
+        </div>
+      );
+    }
 
     // Select options for status
     const options = [
@@ -155,75 +206,8 @@ class CreateProfile extends Component {
                   <span className="text-muted">Optional</span>
                 </div>
 
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <i className="fab fa-twitter" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Twitter Profile URL"
-                    name="twitter"
-                  />
-                </div>
+                {socialInputs}
 
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <i className="fab fa-facebook" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Facebook Page URL"
-                    name="facebook"
-                  />
-                </div>
-
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <i className="fab fa-linkedin" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Linkedin Profile URL"
-                    name="linkedin"
-                  />
-                </div>
-
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <i className="fab fa-youtube" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="YouTube Channel URL"
-                    name="youtube"
-                  />
-                </div>
-
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <i className="fab fa-instagram" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Instagram Page URL"
-                    name="instagram"
-                  />
-                </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
