@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
@@ -253,4 +254,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { createProfile }
-)(CreateProfile);
+)(withRouter(createProfile));
