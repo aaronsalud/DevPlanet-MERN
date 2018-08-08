@@ -104,17 +104,14 @@ class CreateProfile extends Component {
                   info="Could be your own or a company website"
                 />
 
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Location"
-                    name="location"
-                  />
-                  <small className="form-text text-muted">
-                    City & state suggested (eg. Boston, MA)
-                  </small>
-                </div>
+                <TextFieldGroup
+                  placeholder="Location"
+                  name="location"
+                  value={this.state.location}
+                  onChange={this.onChange}
+                  error={errors.location}
+                  info="City & state suggested (eg. Boston, MA)"
+                />
                 <div className="form-group">
                   <input
                     type="text"
