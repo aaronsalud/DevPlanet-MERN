@@ -53,7 +53,7 @@ class CreateProfile extends Component {
       youtube: this.state.youtube,
       instagram: this.state.instagram
     };
-    this.props.createProfile(profileData);
+    this.props.createProfile(profileData, this.props.history);
   };
 
   onChange = e => {
@@ -116,7 +116,7 @@ class CreateProfile extends Component {
 
     // Select options for status
     const options = [
-      { label: '* Select Proessional Status', value: '0' },
+      { label: '* Select Professional Status', value: '0' },
       { label: 'Developer', value: 'Developer' },
       { label: 'Junior Developer', value: 'Junior Developer' },
       { label: 'Senior Developer', value: 'Senior Developer' },
