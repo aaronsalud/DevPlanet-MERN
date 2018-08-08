@@ -112,30 +112,25 @@ class CreateProfile extends Component {
                   error={errors.location}
                   info="City & state suggested (eg. Boston, MA)"
                 />
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Skills"
-                    name="skills"
-                  />
-                  <small className="form-text text-muted">
-                    Please use comma separated values (eg.
-                    HTML,CSS,JavaScript,PHP)
-                  </small>
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Github Username"
-                    name="githubusername"
-                  />
-                  <small className="form-text text-muted">
-                    If you want your latest repos and a Github link, include
-                    your username
-                  </small>
-                </div>
+                <TextFieldGroup
+                  placeholder="Skills"
+                  name="skills"
+                  value={this.state.skills}
+                  onChange={this.onChange}
+                  error={errors.skills}
+                  info="Please use comma separated values (eg.
+                    HTML,CSS,JavaScript,PHP)"
+                />
+
+                <TextFieldGroup
+                  placeholder="Github Username"
+                  name="githubusername"
+                  value={this.state.githubusername}
+                  onChange={this.onChange}
+                  error={errors.githubusername}
+                  info="If you want your latest repos and a Github link, include
+                  your username"
+                />
                 <div className="form-group">
                   <textarea
                     className="form-control form-control-lg"
