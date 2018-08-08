@@ -14,11 +14,11 @@ class Experience extends Component {
         <td>{exp.title}</td>
         <td>{exp.company}</td>
         <td>
-          <Moment format="YYYY/MM/DD">{exp.from}</Moment> -
-          {exp.to === null ? (
+          <Moment format="YYYY/MM/DD">{exp.from.split('T')[0]}</Moment> -{' '}
+          {!exp.to ? (
             ' Present'
           ) : (
-            <Moment format="YYYY/MM/DD">{exp.to}</Moment>
+            <Moment format="YYYY/MM/DD">{exp.to.split('T')[0]}</Moment>
           )}
         </td>
         <td>
