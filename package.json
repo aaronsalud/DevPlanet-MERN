@@ -1,10 +1,10 @@
 {
-  "name": "devhub",
+  "name": "devplanet",
   "version": "1.0.0",
   "description": "Social network for developers",
   "main": "server.js",
   "scripts": {
-    "client-install": "nom install --prefix ui",
+    "client-install": "npm install --prefix ui",
     "start": "node server.js",
     "server": "nodemon server.js --ignore client",
     "client": "npm start --prefix ui",
