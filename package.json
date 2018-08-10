@@ -6,9 +6,9 @@
   "scripts": {
     "client-install": "npm install --prefix ui",
     "start": "node server.js",
-    "server": "nodemon server.js --ignore client",
+    "server": "nodemon server.js",
     "client": "npm start --prefix ui",
-    "dev": "concurrently \"npm run server \" \"npm run client \""
+    "dev": "concurrently \"npm run start \" \"npm run client \""
   },
   "author": "Aaron Mikhail Salud",
   "license": "MIT",
