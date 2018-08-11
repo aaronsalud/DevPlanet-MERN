@@ -52,7 +52,7 @@ class App extends Component {
         <BrowserRouter>
           <div className="App">
             <Navbar />
-            <div className="main-content" style={{ marginTop: '80px' }}>
+            <div className="main-content" style={{ margin: '80px 0' }}>
               <Route exact path="/" component={Landing} />
               <div className="container">
                 <Route exact path="/register" component={Register} />
