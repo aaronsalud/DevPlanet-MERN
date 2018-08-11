@@ -96,6 +96,15 @@ export const getProfileByHandle = handle => dispatch => {
     .catch(error => dispatch({ type: GET_PROFILE, payload: null }));
 };
 
+// Get Profile by user id
+export const getProfileByUserId = id => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get(`/api/profile/user/${id}`)
+    .then(response => dispatch({ type: GET_PROFILE, payload: response.data }))
+    .catch(error => dispatch({ type: GET_PROFILE, payload: null }));
+};
+
 // Delete account and Profile
 export const deleteAccount = () => dispatch => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
