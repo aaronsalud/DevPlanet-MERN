@@ -7,12 +7,12 @@ import ProfileAbout from './ProfileAbout';
 import ProfileCreds from './ProfileCreds';
 import ProfileGithub from './ProfileGithub';
 import Spinner from '../common/Spinner';
-import { getProfileByHandle } from '../../actions/profileActions';
+import { getProfileByUserId } from '../../actions/profileActions';
 
 class Profile extends Component {
   componentDidMount() {
-    if (this.props.match.params.handle) {
-      this.props.getProfileByHandle(this.props.match.params.handle);
+    if (this.props.match.params.user_id) {
+      this.props.getProfileByUserId(this.props.match.params.user_id);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -59,12 +59,13 @@ class Profile extends Component {
   }
 }
 Profile.propTypes = {
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  getProfileById: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   profile: state.profile
 });
 export default connect(
   mapStateToProps,
-  { getProfileByHandle }
+  { getProfileByUserId }
 )(Profile);
