@@ -23,7 +23,9 @@ class ProfileGithub extends Component {
     )
       .then(response => response.json())
       .then(data => {
-        this.setState({ repos: data });
+        if (this.refs.myRef) {
+          this.setState({ repos: data });
+        }
       })
       .catch(error => console.log(error));
   }

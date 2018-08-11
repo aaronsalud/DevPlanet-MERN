@@ -60,7 +60,7 @@ class Profile extends Component {
 }
 Profile.propTypes = {
   profile: PropTypes.object.isRequired,
-  getProfileById: PropTypes.func.isRequired
+  getProfileByUserId: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   profile: state.profile
