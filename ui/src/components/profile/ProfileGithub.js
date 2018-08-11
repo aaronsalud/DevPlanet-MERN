@@ -27,6 +27,11 @@ class ProfileGithub extends Component {
       })
       .catch(error => console.log(error));
   }
+  componentWillUnmount() {
+    this.setState({
+      isMounted: false
+    });
+  }
   render() {
     const { repos } = this.state;
     const repoItems = repos.map(repo => (
