@@ -153,6 +153,7 @@ class EditProfile extends Component {
       { label: 'Developer', value: 'Developer' },
       { label: 'Junior Developer', value: 'Junior Developer' },
       { label: 'Senior Developer', value: 'Senior Developer' },
+      { label: 'UX/UI Designer', value: 'UX/UI Designer' },
       { label: 'Manager', value: 'Manager' },
       { label: 'Student or Learning', value: 'Student or Learning' },
       { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
