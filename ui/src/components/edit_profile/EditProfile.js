@@ -40,7 +40,8 @@ class EditProfile extends Component {
       const profile = nextProps.profile.profile;
 
       // Bring skills array back to Comma separated value
-      const skillsCSV = profile.skills.join(',');
+      const skillsCSV =
+        profile && profile.skills ? profile.skills.join(',') : '';
 
       // If profile field does not exist, make empty string
       Object.keys(profile).forEach(key => {
@@ -57,11 +58,26 @@ class EditProfile extends Component {
         skills: skillsCSV,
         githubusername: profile.githubusername,
         bio: profile.bio,
-        twitter: profile.social.twitter,
-        facebook: profile.social.facebook,
-        linkedin: profile.social.linkedin,
-        youtube: profile.social.youtube,
-        instagram: profile.social.instagram
+        twitter:
+          profile.social && profile.social.twitter
+            ? profile.social.twitter
+            : '',
+        facebook:
+          profile.social && profile.social.facebook
+            ? profile.social.facebook
+            : '',
+        linkedin:
+          profile.social && profile.social.linkedin
+            ? profile.social.linkedin
+            : '',
+        youtube:
+          profile.social && profile.social.youtube
+            ? profile.social.youtube
+            : '',
+        instagram:
+          profile.social && profile.social.instagram
+            ? profile.social.instagram
+            : ''
       });
     }
   }
