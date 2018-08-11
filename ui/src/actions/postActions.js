@@ -86,6 +86,16 @@ export const removeLike = id => dispatch => {
     );
 };
 
+// Add a comment to a post
+export const addComment = (id, commentData) => dispatch => {
+  axios
+    .post(`/api/posts/comment/${id}`, commentData)
+    .then(response => dispatch({ type: GET_POST, payload: response.data }))
+    .catch(error =>
+      dispatch({ type: GET_ERRORS, payload: error.response.data })
+    );
+};
+
 // Set loading state
 export const setPostsLoading = () => {
   return {
