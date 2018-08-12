@@ -43,10 +43,21 @@ class EditProfile extends Component {
       const skillsCSV =
         profile && profile.skills ? profile.skills.join(',') : '';
 
+      const fields = [
+        'handle',
+        'company',
+        'website',
+        'location',
+        'status',
+        'skills',
+        'githubusername',
+        'bio'
+      ];
       // If profile field does not exist, make empty string
-      Object.keys(profile).forEach(key => {
-        profile[key] = !isEmpty(profile[key]) ? profile[key] : '';
-      });
+      fields.forEach(
+        field =>
+          (profile[field] = !isEmpty(profile[field]) ? profile[field] : '')
+      );
 
       // Set component fields state
       this.setState({
