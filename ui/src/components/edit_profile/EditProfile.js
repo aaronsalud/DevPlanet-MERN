@@ -39,57 +39,59 @@ class EditProfile extends Component {
     if (nextProps.profile) {
       const profile = nextProps.profile.profile;
 
-      // Bring skills array back to Comma separated value
-      const skillsCSV =
-        profile && profile.skills ? profile.skills.join(',') : '';
+      if (profile) {
+        // Bring skills array back to Comma separated value
+        const skillsCSV =
+          profile && profile.skills ? profile.skills.join(',') : '';
 
-      const fields = [
-        'handle',
-        'company',
-        'website',
-        'location',
-        'status',
-        'skills',
-        'githubusername',
-        'bio'
-      ];
-      // If profile field does not exist, make empty string
-      fields.forEach(
-        field =>
-          (profile[field] = !isEmpty(profile[field]) ? profile[field] : '')
-      );
+        const fields = [
+          'handle',
+          'company',
+          'website',
+          'location',
+          'status',
+          'skills',
+          'githubusername',
+          'bio'
+        ];
+        // If profile field does not exist, make empty string
+        fields.forEach(
+          field =>
+            (profile[field] = !isEmpty(profile[field]) ? profile[field] : '')
+        );
 
-      // Set component fields state
-      this.setState({
-        handle: profile.handle,
-        company: profile.company,
-        website: profile.website,
-        location: profile.location,
-        status: profile.status,
-        skills: skillsCSV,
-        githubusername: profile.githubusername,
-        bio: profile.bio,
-        twitter:
-          profile.social && profile.social.twitter
-            ? profile.social.twitter
-            : '',
-        facebook:
-          profile.social && profile.social.facebook
-            ? profile.social.facebook
-            : '',
-        linkedin:
-          profile.social && profile.social.linkedin
-            ? profile.social.linkedin
-            : '',
-        youtube:
-          profile.social && profile.social.youtube
-            ? profile.social.youtube
-            : '',
-        instagram:
-          profile.social && profile.social.instagram
-            ? profile.social.instagram
-            : ''
-      });
+        // Set component fields state
+        this.setState({
+          handle: profile.handle,
+          company: profile.company,
+          website: profile.website,
+          location: profile.location,
+          status: profile.status,
+          skills: skillsCSV,
+          githubusername: profile.githubusername,
+          bio: profile.bio,
+          twitter:
+            profile.social && profile.social.twitter
+              ? profile.social.twitter
+              : '',
+          facebook:
+            profile.social && profile.social.facebook
+              ? profile.social.facebook
+              : '',
+          linkedin:
+            profile.social && profile.social.linkedin
+              ? profile.social.linkedin
+              : '',
+          youtube:
+            profile.social && profile.social.youtube
+              ? profile.social.youtube
+              : '',
+          instagram:
+            profile.social && profile.social.instagram
+              ? profile.social.instagram
+              : ''
+        });
+      }
     }
   }
   componentDidMount() {
