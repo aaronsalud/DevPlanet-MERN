@@ -4,5 +4,5 @@ This is a web application built with MERN (MongoDB, Express, React Node) Stack. 
 
 This app is only built for demo and educational purposes only.
 
-Link: https://shrouded-falls-38863.herokuapp.com/
+Link: https://devplanet.herokuapp.com/
 
