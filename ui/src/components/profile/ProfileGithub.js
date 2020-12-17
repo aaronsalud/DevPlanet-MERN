@@ -23,7 +23,6 @@ class ProfileGithub extends Component {
     )
       .then(response => response.json())
       .then(data => {
-         console.log(data);
         if (this.repoView) {
           this.setState({ repos: data });
         }
@@ -42,7 +41,7 @@ class ProfileGithub extends Component {
         <div className="row">
           <div className="col-md-6">
             <h4>
-              <a href={repo.html_url} className="text-info" target="_blank" without rel="noopener noreferrer">
+              <a href={repo.html_url} className="text-info" target="_blank" rel="noopener noreferrer">
                 {repo.name}
               </a>
             </h4>
