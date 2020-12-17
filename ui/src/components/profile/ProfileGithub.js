@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 
 class ProfileGithub extends Component {
@@ -11,6 +11,7 @@ class ProfileGithub extends Component {
       sort: 'created: asc',
       repos: []
     };
+    this.repoView = createRef();
   }
 
   componentDidMount() {
@@ -22,7 +23,8 @@ class ProfileGithub extends Component {
     )
       .then(response => response.json())
       .then(data => {
-        if (this.refs.myRef) {
+         console.log(data);
+        if (this.repoView) {
           this.setState({ repos: data });
         }
       })
@@ -40,7 +42,7 @@ class ProfileGithub extends Component {
         <div className="row">
           <div className="col-md-6">
             <h4>
-              <a href={repo.html_url} className="text-info" target="_blank">
+              <a href={repo.html_url} className="text-info" target="_blank" without rel="noopener noreferrer">
                 {repo.name}
               </a>
             </h4>
@@ -61,7 +63,7 @@ class ProfileGithub extends Component {
       </div>
     ));
     return (
-      <div ref="myRef">
+      <div ref={this.repoView}>
         <hr />
         <h3 className="mb-4">Latest Github Repos</h3>
         {repoItems}
