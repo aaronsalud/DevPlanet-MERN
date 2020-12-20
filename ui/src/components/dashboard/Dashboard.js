@@ -21,43 +21,43 @@ class Dashboard extends Component {
     const { profile, loading } = this.props.profile;
 
     let dashboardContent;
-    if (profile === null || loading) {
+    if (!profile && loading) {
       dashboardContent = <Spinner />;
-    } else {
-      // Check if logged in user has profile data
-      if (Object.keys(profile).length > 0) {
-        dashboardContent = (
-          <div>
-            <p className="lead text-muted">
-              Welcome{' '}
-              <Link to={`/profile/${profile.user._id}`}>{user.name}</Link>
-            </p>
-            <ProfileActions />
-            <Experience data={profile.experience} />
-            <Education data={profile.education} />
-            <div style={{ marginBottom: '60px' }}>
-              <button
-                onClick={this.onDeactivateClick}
-                className="btn btn-danger"
-              >
-                Deactivate My Account
-              </button>
-            </div>
-          </div>
-        );
-      } else {
-        // User is logged in but has no profile
-        dashboardContent = (
-          <div>
-            <p className="lead text-muted">Welcome {user.name}</p>
-            <p>You have not yet setup a profile, please add some info</p>
-            <Link to="/create-profile" className="btn btn-lg btn-info">
-              Create Profile
-            </Link>
-          </div>
-        );
-      }
     }
+    // Check if logged in user has profile data
+    else if (profile && Object.keys(profile).length > 0) {
+      dashboardContent = (
+        <div>
+          <p className="lead text-muted">
+            Welcome{' '}
+            <Link to={`/profile/${profile.user._id}`}>{user.name}</Link>
+          </p>
+          <ProfileActions />
+          <Experience data={profile.experience} />
+          <Education data={profile.education} />
+          <div style={{ marginBottom: '60px' }}>
+            <button
+              onClick={this.onDeactivateClick}
+              className="btn btn-danger"
+            >
+              Deactivate My Account
+              </button>
+          </div>
+        </div>
+      );
+    } else {
+      // User is logged in but has no profile
+      dashboardContent = (
+        <div>
+          <p className="lead text-muted">Welcome {user.name}</p>
+          <p>You have not yet setup a profile, please add some info</p>
+          <Link to="/create-profile" className="btn btn-lg btn-info">
+            Create Profile
+            </Link>
+        </div>
+      );
+    }
+
     return (
       <div className="dashboard">
         <div className="container">
