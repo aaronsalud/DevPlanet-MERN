@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import _ from 'lodash';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
 import ProfileCreds from './ProfileCreds';
@@ -15,16 +16,24 @@ class Profile extends Component {
       this.props.getProfileByUserId(this.props.match.params.user_id);
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.profile.profile === null && this.props.profile.loading) {
+
+  componentDidUpdate() {
+    const { profile, loading } = this.props.profile
+
+    if (!profile && !loading) {
       this.props.history.push('/notfound');
     }
   }
+
   render() {
     const { profile, loading } = this.props.profile;
     let profileContent;
 
-    if (!profile || loading) {
+    // Return empty div if there is now profile found then redirect to not found page executed in componentDidUpdate lifecycle
+    if (!profile && !loading) {
+      return <div></div>;
+    }
+    if (!profile && loading) {
       profileContent = <Spinner />;
     } else {
       profileContent = (
