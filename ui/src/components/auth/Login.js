@@ -28,23 +28,22 @@ class Login extends Component {
     this.props.loginUser(loginCredentials);
   };
 
-  componentWillReceiveProps(nextProps) {
-    // Redirect user if already logged in
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
-
-  componentDidMount() {
+  redirectToDashboardPage = () => {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/dashboard');
     }
   }
+
+  componentDidMount() {
+    this.redirectToDashboardPage();
+  }
+
+  componentDidUpdate(){
+    this.redirectToDashboardPage();
+  }
+
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
     return (
       <div className="login">
         <div className="container">
