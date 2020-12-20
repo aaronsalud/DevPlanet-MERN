@@ -121,7 +121,7 @@ export const setPostsLoading = () => {
   };
 };
 
-// Set loading state
+// Clear Form Error state
 export const clearErrors = () => {
   return {
     type: CLEAR_ERRORS
