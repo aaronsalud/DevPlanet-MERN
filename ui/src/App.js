@@ -26,28 +26,29 @@ import Post from './components/post/Post';
 import NotFound from './components/not_found/NotFound';
 
 import './App.css';
-
-// Check to see if user is already logged in for every page request
-if (localStorage.jwtToken) {
-  // Set auth token header auth
-  setAuthToken(localStorage.jwtToken);
-  // Decode token and get user info and expiration
-  const decoded = jwt_decode(localStorage.jwtToken);
-  // Set user and isAuthenticted
-  store.dispatch(setCurrentUser(decoded));
-  // Check for expired token
-  const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
-    // Logout user
-    store.dispatch(logoutUser());
-    // Clear current Profile
-    store.dispatch(clearCurrentProfile());
-    // Redirect back to login
-    window.location.href = '/login';
-  }
-}
-
 class App extends Component {
+  constructor(props) {
+    super(props);
+    // Check to see if user is already logged in for every page request
+    if (localStorage.jwtToken) {
+      // Set auth token header auth
+      setAuthToken(localStorage.jwtToken);
+      // Decode token and get user info and expiration
+      const decoded = jwt_decode(localStorage.jwtToken);
+      // Set user and isAuthenticted
+      store.dispatch(setCurrentUser(decoded));
+      // Check for expired token
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        // Logout user
+        store.dispatch(logoutUser());
+        // Clear current Profile
+        store.dispatch(clearCurrentProfile());
+        // Redirect back to login
+        window.location.href = '/login';
+      }
+    }
+  }
   render() {
     return (
       <Provider store={store}>
