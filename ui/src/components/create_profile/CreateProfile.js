@@ -25,15 +25,8 @@ class CreateProfile extends Component {
       facebook: '',
       linkedin: '',
       youtube: '',
-      instagram: '',
-      errors: {}
+      instagram: ''
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
   }
 
   onSubmit = e => {
@@ -61,7 +54,8 @@ class CreateProfile extends Component {
   };
 
   render() {
-    const { errors, displaySocialInputs } = this.state;
+    const { displaySocialInputs } = this.state;
+    const { errors } = this.props;
 
     let socialInputs;
 
