@@ -21,10 +21,12 @@ class PostForm extends Component {
     };
     this.props.addPost(newPost);
     this.setState({ text: '' });
-  };
+  }
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-  };
+  }
+
   render() {
     const { errors } = this.props;
     return (
