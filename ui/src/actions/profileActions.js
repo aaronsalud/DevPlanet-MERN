@@ -6,7 +6,8 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  CLEAR_ERRORS
 } from './types';
 
 // Get current profile
@@ -33,9 +34,12 @@ export const createProfile = (profileData, history) => dispatch => {
   axios
     .post('/api/profile', profileData)
     .then(response => history.push('/dashboard'))
-    .catch(error =>
-      dispatch({ type: GET_ERRORS, payload: error.response.data })
-    );
+    .catch(error => {
+      dispatch({ type: GET_ERRORS, payload: error.response.data });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ERRORS });
+      }, 3000)
+    });
 };
 
 // Add Experience
