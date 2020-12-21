@@ -21,8 +21,12 @@ export const addPost = postData => dispatch => {
         payload: response.data
       })
     )
-    .catch(error =>
-      dispatch({ type: GET_ERRORS, payload: error.response.data })
+    .catch(error => {
+      dispatch({ type: GET_ERRORS, payload: error.response.data });
+      setTimeout(() => {
+        dispatch(clearErrors());
+      }, 3000);
+    }
     );
 };
 
