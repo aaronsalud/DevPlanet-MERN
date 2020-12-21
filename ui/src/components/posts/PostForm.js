@@ -7,15 +7,10 @@ class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: '',
-      errors: {}
+      text: ''
     };
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
+
   onSubmit = e => {
     e.preventDefault();
     const { user } = this.props.auth;
@@ -31,7 +26,7 @@ class PostForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
     return (
       <div className="post-form mb-3">
         <div className="card card-info">
