@@ -38,7 +38,7 @@ export const createProfile = (profileData, history) => dispatch => {
       dispatch({ type: GET_ERRORS, payload: error.response.data });
       setTimeout(() => {
         dispatch({ type: CLEAR_ERRORS });
-      }, 3000)
+      }, 3000);
     });
 };
 
@@ -47,9 +47,12 @@ export const addExperience = (expData, history) => dispatch => {
   axios
     .post('/api/profile/experience', expData)
     .then(response => history.push('/dashboard'))
-    .catch(error =>
-      dispatch({ type: GET_ERRORS, payload: error.response.data })
-    );
+    .catch(error => {
+      dispatch({ type: GET_ERRORS, payload: error.response.data });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ERRORS });
+      }, 3000);
+    });
 };
 
 // Add Education
@@ -57,9 +60,12 @@ export const addEducation = (eduData, history) => dispatch => {
   axios
     .post('/api/profile/education', eduData)
     .then(response => history.push('/dashboard'))
-    .catch(error =>
-      dispatch({ type: GET_ERRORS, payload: error.response.data })
-    );
+    .catch(error => {
+      dispatch({ type: GET_ERRORS, payload: error.response.data });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ERRORS });
+      }, 3000);
+    });
 };
 
 // Delete Experience
