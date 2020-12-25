@@ -17,15 +17,8 @@ class AddEducation extends Component {
       to: '',
       current: false,
       description: '',
-      errors: {},
       disabled: false
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
   }
 
   onChange = e => {
@@ -55,7 +48,8 @@ class AddEducation extends Component {
     this.props.addEducation(eduData, this.props.history);
   };
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
+    
     return (
       <div className="section add-education">
         <div className="container">
