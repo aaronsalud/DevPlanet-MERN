@@ -10,25 +10,23 @@ import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 import isEmpty from '../../validation/is-empty';
 
 class EditProfile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      displaySocialInputs: false,
-      handle: '',
-      company: '',
-      website: '',
-      location: '',
-      status: '',
-      skills: '',
-      githubusername: '',
-      bio: '',
-      twitter: '',
-      facebook: '',
-      linkedin: '',
-      youtube: '',
-      instagram: ''
-    };
-  }
+
+  state = {
+    displaySocialInputs: false,
+    handle: '',
+    company: '',
+    website: '',
+    location: '',
+    status: '',
+    skills: '',
+    githubusername: '',
+    bio: '',
+    twitter: '',
+    facebook: '',
+    linkedin: '',
+    youtube: '',
+    instagram: ''
+  };
 
   loadFormData = () => {
     if (this.props.profile) {
