@@ -26,18 +26,13 @@ class EditProfile extends Component {
       facebook: '',
       linkedin: '',
       youtube: '',
-      instagram: '',
-      errors: {}
+      instagram: ''
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-
-    if (nextProps.profile) {
-      const profile = nextProps.profile.profile;
+  loadFormData = () => {
+    if (this.props.profile) {
+      const { profile } = this.props.profile;
 
       if (profile) {
         // Bring skills array back to Comma separated value
@@ -98,6 +93,12 @@ class EditProfile extends Component {
     this.props.getCurrentProfile();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.profile !== this.props.profile && !this.props.profile.loading) {
+      this.loadFormData();
+    }
+  }
+
   onSubmit = e => {
     e.preventDefault();
     const profileData = {
@@ -123,7 +124,8 @@ class EditProfile extends Component {
   };
 
   render() {
-    const { errors, displaySocialInputs } = this.state;
+    const { displaySocialInputs } = this.state;
+    const { errors } = this.props;
 
     let socialInputs;
 
