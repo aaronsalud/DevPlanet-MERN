@@ -7,8 +7,14 @@ const Spinner = () => {
     width: '200px',
     margin: 'auto'
   };
+
+  const center = {
+    margin: 'auto',
+    padding: '20% 0'
+  }
   return (
-    <div>
+
+    <div style={center}>
       <img src={spinner} style={style} alt="Loading..." />
     </div>
   );
