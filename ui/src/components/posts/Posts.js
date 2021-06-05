@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import PostForm from './PostForm';
@@ -6,32 +6,29 @@ import Spinner from '../common/Spinner';
 import PostFeed from './PostFeed';
 import { getPosts } from '../../actions/postActions';
 
-class Posts extends Component {
-  componentDidMount() {
-    this.props.getPosts();
+const Posts = ({ post, getPosts }) => {
+  useEffect(() => {
+    getPosts();
+  }, []);
+  
+  const loadPosts = () => {
+    const { posts, loading } = post;
+    if (!posts && loading) return <Spinner />;
+    else return <PostFeed posts={posts} />;
   }
-  render() {
-    const { posts, loading } = this.props.post;
 
-    let postContent;
-    if (posts === null || loading) {
-      postContent = <Spinner />;
-    } else {
-      postContent = <PostFeed posts={posts} />;
-    }
-    return (
-      <div className="feed">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <PostForm />
-              {postContent}
-            </div>
+  return (
+    <div className="feed">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <PostForm />
+            {loadPosts()}
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 Posts.propTypes = {
   post: PropTypes.object.isRequired,
