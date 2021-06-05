@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -8,64 +8,49 @@ import ProfileAbout from './ProfileAbout';
 import ProfileCreds from './ProfileCreds';
 import ProfileGithub from './ProfileGithub';
 import Spinner from '../common/Spinner';
-import { getProfileByUserId } from '../../actions/profileActions';
+import { getProfileByUserId, clearCurrentProfile } from '../../actions/profileActions';
 
-class Profile extends Component {
-  componentDidMount() {
-    if (this.props.match.params.user_id) {
-      this.props.getProfileByUserId(this.props.match.params.user_id);
-    }
-  }
+const Profile = ({ match, profile, getProfileByUserId, clearCurrentProfile }) => {
 
-  componentDidUpdate() {
-    const { profile, loading } = this.props.profile
+  useEffect(() => {
+    if (match.params.user_id) getProfileByUserId(match.params.user_id);
+    return () => clearCurrentProfile();
+  }, []);
 
-    if (!profile && !loading) {
-      this.props.history.push('/notfound');
-    }
-  }
+  const loadUserProfile = () => {
+    const profileData = profile.profile;
 
-  render() {
-    const { profile, loading } = this.props.profile;
-    let profileContent;
+    if (!profileData) return <Spinner />;
 
-    // Return empty div if there is now profile found then redirect to not found page executed in componentDidUpdate lifecycle
-    if (!profile && !loading) {
-      return <div></div>;
-    }
-    if (!profile && loading) {
-      profileContent = <Spinner />;
-    } else {
-      profileContent = (
-        <div className="col-md-12">
-          <div className="row">
-            <div className="col-md-6">
-              <Link to="/profiles" className="btn btn-light mb-3 float-left">
-                Back To Profiles
-              </Link>
-            </div>
-          </div>
-          <div className="col-md-6" />
-          <ProfileHeader profile={profile} />
-          <ProfileAbout profile={profile} />
-          <ProfileCreds
-            education={profile.education}
-            experience={profile.experience}
-          />
-          {profile.githubusername ? (
-            <ProfileGithub username={profile.githubusername} />
-          ) : null}
-        </div>
-      );
-    }
     return (
-      <div className="profile">
-        <div className="container">
-          <div className="row">{profileContent}</div>
+      <div className="col-md-12">
+        <div className="row">
+          <div className="col-md-6">
+            <Link to="/profiles" className="btn btn-light mb-3 float-left">Back To Profiles</Link>
+          </div>
         </div>
+        <div className="col-md-6" />
+        <ProfileHeader profile={profileData} />
+        <ProfileAbout profile={profileData} />
+        <ProfileCreds
+          education={profileData.education}
+          experience={profileData.experience}
+        />
+        {profileData.githubusername ? (
+          <ProfileGithub username={profileData.githubusername} />
+        ) : null}
       </div>
     );
+
   }
+
+  return (
+    <div className="profile">
+      <div className="container">
+        <div className="row">{loadUserProfile()}</div>
+      </div>
+    </div>
+  );
 }
 Profile.propTypes = {
   profile: PropTypes.object.isRequired,
@@ -76,5 +61,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getProfileByUserId }
+  { getProfileByUserId, clearCurrentProfile }
 )(Profile);
