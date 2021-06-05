@@ -14,6 +14,8 @@ const validateProfileInput = require('../../validation/profile');
 const validateExperienceInput = require('../../validation/experience');
 const validateEducationInput = require('../../validation/education');
 
+const profileService = require('../../services/profileService');
+
 // @route GET api/profile
 // @desc Get Current User profile
 // @access Private
@@ -56,13 +58,18 @@ router.get('/handle/:handle', (req, res) => {
 // @access Public
 router.get('/user/:user_id', (req, res) => {
   Profile.findOne({ user: req.params.user_id })
-    .populate('user', ['name', 'avatar'])
+    .populate('user', ['name', 'avatar']).lean()
     .then(profile => {
       if (!profile) {
         errors.noprofile = 'There is no profile for this user';
         return res.status(404).json(errors);
       }
-      res.json(profile);
+
+      if (profile && profile.githubusername) {
+        profileService.getGithubRepos(profile.githubusername).then(data => res.json({...profile, githubRepos: data}));
+      }
+      
+      else res.json(profile);
     })
     .catch(err =>
       res
