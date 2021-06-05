@@ -36,9 +36,7 @@ const Profile = ({ match, profile, getProfileByUserId, clearCurrentProfile }) =>
           education={profileData.education}
           experience={profileData.experience}
         />
-        {profileData.githubusername ? (
-          <ProfileGithub username={profileData.githubusername} />
-        ) : null}
+        {profileData.githubRepos && (<ProfileGithub profile={profileData}/>) }
       </div>
     );
 
