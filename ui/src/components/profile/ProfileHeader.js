@@ -19,10 +19,8 @@ const ProfileHeader = ({ profile }) => {
           <div className="text-center">
             <h1 className="display-4 text-center">{profile.user.name}</h1>
             <p className="lead text-center">
-              {profile.status}{' '}
-              {isEmpty(profile.company) ? null : (
-                <span> at {profile.company}</span>
-              )}
+              {`${profile.status} at `}
+              {!isEmpty(profile.company) && profile.company}
             </p>
             <p>
               {' '}
