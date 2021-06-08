@@ -8,7 +8,6 @@ const InputFieldGroup = ({
   value,
   error,
   icon,
-  type,
   onChange
 }) => {
   return (
