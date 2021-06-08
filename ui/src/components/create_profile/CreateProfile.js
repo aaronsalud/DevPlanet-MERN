@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import { createProfile } from '../../actions/profileActions';
 import ProfileForm from '../forms/ProfileForm';
 
@@ -26,7 +24,7 @@ const CreateProfile = ({ errors, createProfile, history }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    createProfile(profileFormData, history);
+    createProfile(formData, history);
   };
 
   const heading = 'Create Your Profile';
@@ -46,4 +44,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { createProfile }
-)(withRouter(CreateProfile));
+)(CreateProfile);
