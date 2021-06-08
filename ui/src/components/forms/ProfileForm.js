@@ -10,52 +10,28 @@ const ProfileForm = ({ formData, setFormData, onSubmit, errors, heading, subhead
     const [showSocialInputs, setShowSocialInputs] = useState(false)
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const loadSocialInputs = () => (
-        <div>
-            <InputFieldGroup
-                placeholder="Twitter Profile URL"
-                name="twitter"
-                icon="fab fa-twitter"
-                value={formData.twitter}
-                onChange={onChange}
-                error={errors.twitter}
-            />
-            <InputFieldGroup
-                placeholder="Facebook Page URL"
-                name="facebook"
-                icon="fab fa-facebook"
-                value={formData.facebook}
-                onChange={onChange}
-                error={errors.facebook}
-            />
+    const loadSocialInputs = () => {
+        const inputs = [
+            { name: 'twitter', placeholder: 'Twitter Profile URL' },
+            { name: 'facebook', placeholder: 'Facebook Page URL' },
+            { name: 'linkedin', placeholder: 'LinkedIn Profile URL' },
+            { name: 'youtube', placeholder: 'Youtube Channel URL' },
+            { name: 'instagram', placeholder: 'Instagram Page URL' },
+        ];
 
-            <InputFieldGroup
-                placeholder="Linkedin Profile URL"
-                name="linkedin"
-                icon="fab fa-linkedin"
-                value={formData.linkedin}
-                onChange={onChange}
-                error={errors.linkedin}
-            />
-            <InputFieldGroup
-                placeholder="Youtube Channel URL"
-                name="youtube"
-                icon="fab fa-youtube"
-                value={formData.youtube}
-                onChange={onChange}
-                error={errors.youtube}
-            />
-
-            <InputFieldGroup
-                placeholder="Instagram Page URL"
-                name="instagram"
-                icon="fab fa-instagram"
-                value={formData.instagram}
-                onChange={onChange}
-                error={errors.instagram}
-            />
+        return <div>
+            {inputs.map(({ name, placeholder }) => (
+                <InputFieldGroup
+                    placeholder={placeholder}
+                    name={name}
+                    icon={`fab fa-${name}`}
+                    value={formData[name]}
+                    onChange={onChange}
+                    error={errors[name]}
+                />
+            ))}
         </div>
-    );
+    };
 
     // Select options for status
     const options = [
