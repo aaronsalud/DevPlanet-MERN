@@ -10,28 +10,24 @@ const ProfileForm = ({ formData, setFormData, onSubmit, errors, heading, subhead
     const [showSocialInputs, setShowSocialInputs] = useState(false)
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const loadSocialInputs = () => {
-        const inputs = [
-            { name: 'twitter', placeholder: 'Twitter Profile URL' },
-            { name: 'facebook', placeholder: 'Facebook Page URL' },
-            { name: 'linkedin', placeholder: 'LinkedIn Profile URL' },
-            { name: 'youtube', placeholder: 'Youtube Channel URL' },
-            { name: 'instagram', placeholder: 'Instagram Page URL' },
-        ];
+    const formInputs = [
+        { name: 'handle', placeholder: '* Profile handle', info: 'A unique handle for your profile URL. Your full name, company name, nickname, etc (This CAN\'T be changed later)', type: 'text' },
+        { name: 'status', info: 'Give us an idea of where you are at in your career', type: 'select' },
+        { name: 'company', placeholder: 'Company', info: 'Could be your own company or one you work for', type: 'text' },
+        { name: 'website', placeholder: 'Website', info: 'Could be your own or a company website', type: 'text' },
+        { name: 'location', placeholder: 'Location', info: 'City & state suggested (eg. Toronto, ON)' , type: 'text'},
+        { name: 'skills', placeholder: 'Skills', info: 'Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)' , type: 'text'},
+        { name: 'githubusername', placeholder: 'GitHub Username', info: 'If you want your latest repos and a Github link, include your username' , type: 'text'},
+        { name: 'bio', placeholder: 'A short bio of yourself"', info: 'Tell us about yourself' , type: 'textarea'}
+    ];
 
-        return <div>
-            {inputs.map(({ name, placeholder }) => (
-                <InputFieldGroup
-                    placeholder={placeholder}
-                    name={name}
-                    icon={`fab fa-${name}`}
-                    value={formData[name]}
-                    onChange={onChange}
-                    error={errors[name]}
-                />
-            ))}
-        </div>
-    };
+    const socialInputs = [
+        { name: 'twitter', placeholder: 'Twitter Profile URL' },
+        { name: 'facebook', placeholder: 'Facebook Page URL' },
+        { name: 'linkedin', placeholder: 'LinkedIn Profile URL' },
+        { name: 'youtube', placeholder: 'Youtube Channel URL' },
+        { name: 'instagram', placeholder: 'Instagram Page URL' },
+    ];
 
     // Select options for status
     const options = [
@@ -46,6 +42,23 @@ const ProfileForm = ({ formData, setFormData, onSubmit, errors, heading, subhead
         { label: 'Other', value: 'Other' }
     ];
 
+    const loadInputs = (inputs) => {
+        return <div>
+            {inputs.map(({ name, placeholder, info, type }) => {
+                switch (type) {
+                    case 'select':
+                        return <SelectListFieldGroup name={name} value={formData[name]} onChange={onChange} error={errors[name]} info={info} options={options} />
+                    case 'text':
+                        return <TextFieldGroup placeholder={placeholder} name={name} value={formData[name]} onChange={onChange} error={errors[name]} info={info} />
+                    case 'textarea':
+                        return <TextAreaFieldGroup placeholder={placeholder} name={name} value={formData[name]} onChange={onChange} error={errors[name]} info={info} />
+                    default:
+                        return <InputFieldGroup placeholder={placeholder} name={name} icon={`fab fa-${name}`} value={formData[name]} onChange={onChange} error={errors[name]} info={info} />
+                }
+            })}
+        </div>
+    };
+
     return (
         <div className="profile-form">
             <div className="container">
@@ -56,87 +69,14 @@ const ProfileForm = ({ formData, setFormData, onSubmit, errors, heading, subhead
                         {subheading && <p className="lead text-center">{subheading}</p>}
                         <small className="d-block pb-3">* = required field</small>
                         <form onSubmit={onSubmit}>
-                            <TextFieldGroup
-                                placeholder="* Profile handle"
-                                name="handle"
-                                value={formData.handle}
-                                onChange={onChange}
-                                error={errors.handle}
-                                info="A unique handle for your profile URL. Your full name,
-                      company name, nickname, etc (This CAN'T be changed later)"
-                            />
-
-                            <SelectListFieldGroup
-                                name="status"
-                                value={formData.status}
-                                onChange={onChange}
-                                error={errors.status}
-                                info=" Give us an idea of where you are at in your career"
-                                options={options}
-                            />
-
-                            <TextFieldGroup
-                                placeholder="Company"
-                                name="company"
-                                value={formData.company}
-                                onChange={onChange}
-                                error={errors.company}
-                                info="Could be your own company or one you work for"
-                            />
-
-                            <TextFieldGroup
-                                placeholder="Website"
-                                name="website"
-                                value={formData.website}
-                                onChange={onChange}
-                                error={errors.website}
-                                info="Could be your own or a company website"
-                            />
-
-                            <TextFieldGroup
-                                placeholder="Location"
-                                name="location"
-                                value={formData.location}
-                                onChange={onChange}
-                                error={errors.location}
-                                info="City & state suggested (eg. Boston, MA)"
-                            />
-                            <TextFieldGroup
-                                placeholder="Skills"
-                                name="skills"
-                                value={formData.skills}
-                                onChange={onChange}
-                                error={errors.skills}
-                                info="Please use comma separated values (eg.
-                      HTML,CSS,JavaScript,PHP)"
-                            />
-
-                            <TextFieldGroup
-                                placeholder="Github Username"
-                                name="githubusername"
-                                value={formData.githubusername}
-                                onChange={onChange}
-                                error={errors.githubusername}
-                                info="If you want your latest repos and a Github link, include
-                    your username"
-                            />
-
-                            <TextAreaFieldGroup
-                                name="bio"
-                                placeholder="A short bio of yourself"
-                                value={formData.bio}
-                                error={errors.bio}
-                                onChange={onChange}
-                                info="Tell us a little about yourself"
-                            />
-
+                            {loadInputs(formInputs)}
                             <div className="mb-3">
                                 <button type="button" onClick={() => setShowSocialInputs(!showSocialInputs)} className="btn btn-light">
                                     Add Social Network Links
                                 </button>
                                 <span className="text-muted">Optional</span>
                             </div>
-                            {showSocialInputs && loadSocialInputs()}
+                            {showSocialInputs && loadInputs(socialInputs)}
                             <input type="submit" className="btn btn-info btn-block mt-4" />
                         </form>
                     </div>
